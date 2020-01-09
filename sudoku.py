@@ -141,6 +141,17 @@ def mainScreen(l):
                                   (MARGIN + HEIGHT) * row + MARGIN,
                                   WIDTH,
                                   HEIGHT])
+        for i in range(4):
+            pygame.draw.line(SCREEN,WHITE,(138+i,0),(138+i,415))
+        for i in range(4):
+            pygame.draw.line(SCREEN,WHITE,(273+i,0),(273+i,415))
+        for i in range(4):
+            pygame.draw.line(SCREEN,WHITE,(0,138+i),(415,138+i))
+        for i in range(4):
+            pygame.draw.line(SCREEN,WHITE,(0,273+i),(415,273+i))
+
+
+        
         numx=21
         numy=12
         for row in range(9):
