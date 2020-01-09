@@ -65,9 +65,10 @@ def subMatrix(row,column,num,l):
 
 
 
-def solve(l):
+def solve(l,g):
     # print("hello1")
     global numColor
+    # numColor=BLACK
     temp=[0,0]
     # row,column=zeroFinder(t)
 
@@ -75,15 +76,19 @@ def solve(l):
         return True
     row=temp[0]
     column=temp[1]
+    # if g[row][column]==1:
+    #     numColor=RED
+    
     # print(row,column)
     for num in range(1,10):
 
         if not isInRow(row,column,num,l) and not isInCol(row,column,num,l) and not subMatrix(row - row%3,column - column%3,num,l) :
             l[row][column]=num
             if not keySpace:
-                mainScreen(l)
+                mainScreen(l,g)
+                g[row][column]=1
 
-            if solve(l):
+            if solve(l,g):
                 return True
             l[row][column]=0
             # numColor=RED
@@ -120,7 +125,7 @@ def welcomeScreen():
                 pygame.display.update()
                 FPSCLOCK.tick(FPS)
 
-def mainScreen(l):
+def mainScreen(l,g):
     global keySpace
     while True:
         for event in pygame.event.get():
@@ -161,6 +166,10 @@ def mainScreen(l):
                 if l[row][column]==0:
 
                     numberShow=myFont.render('', 1, numColor)
+                elif g[row][column]==1:
+                    g[row][column]=0
+                    numberShow=myFont.render(str(l[row][column]), 1, RED)
+
                     
                 else:
                     numberShow=myFont.render(str(l[row][column]), 1, numColor)
@@ -218,16 +227,18 @@ if __name__ == '__main__':
       [1,3,0,0,0,0,2,5,0], 
       [0,0,0,0,0,0,0,7,4], 
       [0,0,5,2,0,6,3,0,0]] 
+    g=[[0 for i in range(9)]for x in range(9)]
 
     pygame.init()
     myFont = pygame.font.SysFont("Times New Roman", 25)
     welcomeFont= pygame.font.SysFont("comicsansms", 28)
     infoFont=pygame.font.SysFont("Times New Roman", 15)
     FPSCLOCK = pygame.time.Clock()
+    print(g)
     welcomeScreen()
     # SCREEN.fill(RED)
     SCREEN.blit(pygame.image.load('1.jpg'),(0,0))
-    solve(l)
+    solve(l,g)
     endScreen(l)
 
-   
+    
